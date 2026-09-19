@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="免费在线单位换算工具：支持长度（米、厘米、英寸、英尺、英里）、重量（千克、磅、盎司）、温度（摄氏、华氏、开尔文）换算。">
+<title>单位换算 - 长度/重量/温度在线换算</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header><h1><a href="/">🧰 在线工具箱</a></h1><p>免费 · 无需注册 · 打开即用</p></header>
+<main>
+<section class="tool">
+  <h2>单位换算</h2>
+  <p class="desc">长度、重量、温度常用单位实时换算。</p>
+  <div class="row">
+    <select id="u-cat" onchange="unitCat()">
+      <option value="len">长度</option><option value="wt">重量</option><option value="tmp">温度</option>
+    </select>
+    <input id="u-val" type="number" value="1" style="max-width:120px" oninput="unitConv()">
+    <select id="u-from" onchange="unitConv()"></select>
+    <span>→</span>
+    <select id="u-to" onchange="unitConv()"></select>
+  </div>
+  <div class="result" id="u-result"></div>
+</section>
+<article class="seo">
+  <h3>常用换算小知识</h3>
+  <p>1 英寸 = 2.54 厘米；1 英尺 = 30.48 厘米；1 英里 ≈ 1.609 千米；1 磅 ≈ 0.4536 千克；1 盎司 ≈ 28.35 克。华氏度转摄氏度：°C = (°F − 32) × 5/9。</p>
+</article>
+</main>
+<div class="ad-slot">广告位（接入 Google AdSense 后替换）</div>
+<footer><a href="/">← 返回工具箱首页</a><br>© 2026 在线工具箱</footer>
+<script>
+const UNITS={
+  len:{毫米:0.001,厘米:0.01,米:1,千米:1000,英寸:0.0254,英尺:0.3048,英里:1609.344},
+  wt:{克:1,千克:1000,吨:1000000,磅:453.59237,盎司:28.349523125},
+  tmp:{摄氏度:'c',华氏度:'f',开尔文:'k'}
+};
+function unitCat(){
+  const cat=document.getElementById('u-cat').value;
+  const opts=Object.keys(UNITS[cat]).map(u=>`<option>${u}</option>`).join('');
+  document.getElementById('u-from').innerHTML=opts;
+  document.getElementById('u-to').innerHTML=opts;
+  if(cat==='tmp')document.getElementById('u-to').selectedIndex=1;
+  unitConv();
+}
+const toC=(v,u)=>u==='摄氏度'?v:u==='华氏度'?(v-32)*5/9:v-273.15;
+const fromC=(c,u)=>u==='摄氏度'?c:u==='华氏度'?c*9/5+32:c+273.15;
+function unitConv(){
+  const cat=document.getElementById('u-cat').value,
+        v=parseFloat(document.getElementById('u-val').value),
+        f=document.getElementById('u-from').value,
+        t=document.getElementById('u-to').value,
+        el=document.getElementById('u-result');
+  el.style.display='block';
+  if(isNaN(v)){el.textContent='请输入数字';return}
+  const out=cat==='tmp'?fromC(toC(v,f),t):v*UNITS[cat][f]/UNITS[cat][t];
+  el.innerHTML=`<b>${v}</b> ${f} = <b>${(+out.toPrecision(10)).toLocaleString()}</b> ${t}`;
+}
+unitCat();
+</script>
+</body>
+</html>

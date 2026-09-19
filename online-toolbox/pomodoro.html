@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="免费在线番茄钟：25分钟专注+5分钟休息，番茄工作法计时器，帮你提高专注力和工作效率。">
+<title>在线番茄钟 - 番茄工作法计时器</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header><h1><a href="/">🧰 在线工具箱</a></h1><p>免费 · 无需注册 · 打开即用</p></header>
+<main>
+<section class="tool">
+  <h2>番茄钟</h2>
+  <p class="desc">25 分钟专注 + 5 分钟休息，经典番茄工作法。</p>
+  <div style="font-size:64px;font-weight:bold;text-align:center;margin:20px 0" id="po-time">25:00</div>
+  <div style="text-align:center">
+    <button class="btn" id="po-btn" onclick="pomoToggle()">开始专注</button>
+    <button class="btn" style="background:#9aa5bd" onclick="pomoReset()">重置</button>
+  </div>
+</section>
+<article class="seo">
+  <h3>什么是番茄工作法？</h3>
+  <p>番茄工作法（Pomodoro Technique）由意大利人 Francesco Cirillo 发明：选择一个任务，专注工作 25 分钟（一个"番茄"），然后休息 5 分钟；每完成 4 个番茄钟进行一次 15~30 分钟的长休息。它通过拆分时间降低启动阻力，是对抗拖延和提高专注力的经典方法。</p>
+</article>
+</main>
+<div class="ad-slot">广告位（接入 Google AdSense 后替换）</div>
+<footer><a href="/">← 返回工具箱首页</a><br>© 2026 在线工具箱</footer>
+<script>
+let pomoSec=25*60,pomoTimer=null,pomoWork=true;
+function pomoRender(){
+  const m=String(Math.floor(pomoSec/60)).padStart(2,'0'),s=String(pomoSec%60).padStart(2,'0');
+  document.getElementById('po-time').textContent=`${m}:${s}`;
+}
+function pomoToggle(){
+  const btn=document.getElementById('po-btn');
+  if(pomoTimer){clearInterval(pomoTimer);pomoTimer=null;btn.textContent='继续';return}
+  btn.textContent='暂停';
+  pomoTimer=setInterval(()=>{
+    if(--pomoSec<=0){
+      clearInterval(pomoTimer);pomoTimer=null;
+      pomoWork=!pomoWork;pomoSec=(pomoWork?25:5)*60;
+      btn.textContent=pomoWork?'开始专注':'开始休息';
+      document.title=pomoWork?'🍅 该专注啦':'☕ 该休息啦';
+      alert(pomoWork?'休息结束，开始新的专注！':'专注结束，休息5分钟！');
+    }
+    pomoRender();
+  },1000);
+}
+function pomoReset(){clearInterval(pomoTimer);pomoTimer=null;pomoWork=true;pomoSec=25*60;pomoRender();document.getElementById('po-btn').textContent='开始专注'}
+pomoRender();
+</script>
+</body>
+</html>

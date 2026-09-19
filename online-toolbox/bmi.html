@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="免费在线BMI计算器：输入身高体重，立即计算身体质量指数（BMI），并按中国标准和国际标准给出体重是否正常的评估。">
+<title>BMI计算器 - 身体质量指数在线计算</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header><h1><a href="/">🧰 在线工具箱</a></h1><p>免费 · 无需注册 · 打开即用</p></header>
+<main>
+<section class="tool">
+  <h2>BMI 计算器</h2>
+  <p class="desc">BMI = 体重(kg) ÷ 身高(m)²，是国际通用的体重健康评估指标。</p>
+  <div class="row">
+    <div>身高（cm）<br><input id="b-h" type="number" value="170"></div>
+    <div>体重（kg）<br><input id="b-w" type="number" value="65"></div>
+  </div>
+  <button class="btn" onclick="calcBMI()">计算 BMI</button>
+  <div class="result" id="b-result"></div>
+</section>
+<article class="seo">
+  <h3>BMI 数值怎么看？</h3>
+  <p><b>中国标准（WS/T 428）</b>：BMI &lt; 18.5 偏瘦；18.5~23.9 正常；24~27.9 超重；≥ 28 肥胖。国际 WHO 标准则以 25 为超重界线、30 为肥胖界线。BMI 只是粗略参考，肌肉量大的人群 BMI 偏高并不代表不健康。</p>
+</article>
+</main>
+<div class="ad-slot">广告位（接入 Google AdSense 后替换）</div>
+<footer><a href="/">← 返回工具箱首页</a><br>© 2026 在线工具箱</footer>
+<script>
+function calcBMI(){
+  const h=+document.getElementById('b-h').value/100,w=+document.getElementById('b-w').value,
+        el=document.getElementById('b-result');
+  el.style.display='block';
+  if(!(h>0.5&&h<2.5)||!(w>10&&w<400)){el.textContent='请输入合理的身高体重';return}
+  const bmi=w/(h*h);
+  const lvl=bmi<18.5?'偏瘦':bmi<24?'正常':bmi<28?'超重':'肥胖';
+  el.innerHTML=`您的 BMI 为 <b>${bmi.toFixed(1)}</b>，按中国标准属于「<b>${lvl}</b>」<br>健康体重范围：${(18.5*h*h).toFixed(1)} ~ ${(23.9*h*h).toFixed(1)} kg`;
+}
+</script>
+</body>
+</html>

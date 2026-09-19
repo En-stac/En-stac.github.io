@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="免费在线房贷计算器：支持等额本息、等额本金两种还款方式，输入贷款金额、年限、利率，立即计算每月月供、还款总额和利息总额。">
+<title>房贷计算器 - 等额本息/等额本金月供计算</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header><h1><a href="/">🧰 在线工具箱</a></h1><p>免费 · 无需注册 · 打开即用</p></header>
+<main>
+<section class="tool">
+  <h2>房贷计算器</h2>
+  <p class="desc">支持等额本息 / 等额本金两种方式，快速估算月供。</p>
+  <div class="row">
+    <div>贷款总额（万元）<br><input id="h-amount" type="number" value="100"></div>
+    <div>年限（年）<br><input id="h-years" type="number" value="30"></div>
+    <div>年利率（%）<br><input id="h-rate" type="number" step="0.01" value="3.6"></div>
+    <div>还款方式<br><select id="h-type"><option value="1">等额本息</option><option value="2">等额本金</option></select></div>
+  </div>
+  <button class="btn" onclick="calcHouse()">计算月供</button>
+  <div class="result" id="h-result"></div>
+</section>
+<article class="seo">
+  <h3>等额本息和等额本金的区别</h3>
+  <p><b>等额本息</b>：每月还款金额固定，前期压力小，但总利息较多，适合收入稳定的年轻人。<b>等额本金</b>：每月还款逐月递减，前期还款多但总利息少，适合当前收入较高的人群。</p>
+  <p>计算公式：等额本息月供 = 贷款本金 × 月利率 × (1+月利率)^期数 ÷ ((1+月利率)^期数 - 1)。本计算结果仅供参考，实际以银行审批为准。</p>
+</article>
+</main>
+<div class="ad-slot">广告位（接入 Google AdSense 后替换）</div>
+<footer><a href="/">← 返回工具箱首页</a><br>© 2026 在线工具箱</footer>
+<script>
+function calcHouse(){
+  const A=parseFloat(document.getElementById('h-amount').value)*10000,
+        Y=parseInt(document.getElementById('h-years').value),
+        r=parseFloat(document.getElementById('h-rate').value)/100/12,
+        n=Y*12,type=document.getElementById('h-type').value,
+        el=document.getElementById('h-result');
+  el.style.display='block';
+  if(!(A>0)||!(n>0)||!(r>=0)){el.textContent='请输入有效数字';return}
+  if(type==='1'){
+    const m=r===0?A/n:A*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+    el.innerHTML=`每月还款：<b>${m.toFixed(2)}</b> 元<br>还款总额：${(m*n).toFixed(2)} 元<br>支付利息：${(m*n-A).toFixed(2)} 元`;
+  }else{
+    const p=A/n;let total=0;
+    for(let i=0;i<n;i++)total+=p+A*r*(1-i/n);
+    el.innerHTML=`首月还款：<b>${(p+A*r).toFixed(2)}</b> 元，每月递减 ${(A/n*r).toFixed(2)} 元<br>末期还款：${(p+A/n*r).toFixed(2)} 元<br>还款总额：${total.toFixed(2)} 元<br>支付利息：${(total-A).toFixed(2)} 元`;
+  }
+}
+</script>
+</body>
+</html>

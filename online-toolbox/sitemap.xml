@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 部署后把下面的域名替换成你的实际网址，再去 Google Search Console 提交 -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://你的域名.github.io/</loc><priority>1.0</priority></url>
+<url><loc>https://你的域名.github.io/qr-code.html</loc><priority>0.8</priority></url>
+<url><loc>https://你的域名.github.io/mortgage-calculator.html</loc><priority>0.8</priority></url>
+<url><loc>https://你的域名.github.io/income-tax.html</loc><priority>0.8</priority></url>
+<url><loc>https://你的域名.github.io/bmi.html</loc><priority>0.8</priority></url>
+<url><loc>https://你的域名.github.io/unit-converter.html</loc><priority>0.8</priority></url>
+<url><loc>https://你的域名.github.io/password-generator.html</loc><priority>0.8</priority></url>
+<url><loc>https://你的域名.github.io/pomodoro.html</loc><priority>0.8</priority></url>
+</urlset>
